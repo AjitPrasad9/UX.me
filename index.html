@@ -65,11 +65,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--sel);outline-offset
 
 .portrait{grid-column:2;align-self:stretch;justify-self:stretch;container-type:size;display:grid;place-items:center;min-height:0;margin-top:clamp(10px,2.4vh,26px)}
 .pwrap{position:relative;width:calc(min(100cqw,100cqh) - 22px);height:calc(min(100cqw,100cqh) - 22px)}
-.disc{position:absolute;inset:0;border-radius:clamp(36px,14%,60px);overflow:hidden;background:var(--acc);outline:1px solid var(--line);outline-offset:8px}
+.disc{position:absolute;inset:0;border-radius:50%;overflow:hidden;background:var(--acc);border:5px solid rgba(244,242,236,.2);outline:none;box-shadow:0 12px 36px rgba(0,0,0,.6)}
 .disc img{display:block;width:100%;height:100%;object-fit:cover;transform:scale(1.18);transition:transform .9s cubic-bezier(.2,.9,.2,1),filter .6s}
 .disc.on img{transform:none}
 html:not(.inked) .disc img{filter:grayscale(1) contrast(1.08)}
-.tagline{position:absolute;left:50%;bottom:2%;transform:translateX(-50%);background:var(--ink);border:1px solid var(--line);padding:6px 13px 5px;font-size:13px;font-weight:600;white-space:nowrap}
+.tagline{position:absolute;left:50%;bottom:2%;transform:translateX(-50%);background:var(--ink);border:1px solid var(--line);padding:6px 13px 5px;font-size:13px;font-weight:600;white-space:nowrap;border-radius:4px;z-index:2;box-shadow:0 4px 12px rgba(0,0,0,.6)}
 
 .now{grid-column:3;align-self:center;margin-top:clamp(8px,2vh,22px)}
 .now h2{font:600 14px/1 var(--body);color:var(--mute);margin-bottom:14px}
@@ -119,8 +119,10 @@ h2.h{font:900 clamp(44px,6.4vw,104px)/.88 var(--display);text-transform:uppercas
 .row:last-child{border-bottom:1px solid var(--line)}
 .row h3{font:600 15px/1.2 var(--body);color:var(--mute)}
 .chips{display:flex;flex-wrap:wrap;gap:10px}
-.chips span{font:800 clamp(22px,2.3vw,36px)/1 var(--display);text-transform:uppercase;letter-spacing:.02em;padding:10px 14px 8px;border:1px solid var(--line);background:var(--ink2)}
-.chips span.hot{background:var(--acc);color:var(--on-acc);border-color:transparent}
+.chips span{font:800 clamp(20px,2vw,30px)/1 var(--display);text-transform:uppercase;letter-spacing:.02em;padding:10px 14px 8px;border:1px solid var(--line);background:var(--ink2);color:var(--paper);border-radius:2px;transition:all .2s ease}
+.chips span:hover{border-color:rgba(244,242,236,.4);transform:translateY(-2px)}
+.chips span.highlighted{background:var(--acc);color:var(--on-acc);border-color:var(--acc);font-weight:900;box-shadow:0 0 16px rgba(255,243,19,.45),0 4px 12px rgba(0,0,0,.6);transform:translateY(-1px);position:relative}
+.chips span.highlighted:hover{box-shadow:0 0 24px rgba(255,243,19,.75),0 6px 18px rgba(0,0,0,.7);transform:translateY(-3px) scale(1.02)}
 
 .contact{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding-bottom:clamp(90px,14vh,130px)}
 .swarm-stage{width:100%;height:clamp(150px,34vh,330px)}
@@ -255,9 +257,9 @@ section.sec, section.hero{scroll-margin-top:74px}
 .gallery-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(14px,1.6vw,24px);margin-top:clamp(28px,5vh,54px)}
 .gallery-card{background:var(--ink2);border:1px solid var(--line);display:flex;flex-direction:column;border-radius:2px;overflow:hidden;transition:border-color .22s ease,transform .22s ease,box-shadow .22s ease}
 .gallery-card:hover{border-color:var(--acc);transform:translateY(-4px);box-shadow:0 14px 36px rgba(0,0,0,.6)}
-.gallery-thumb{aspect-ratio:16/10;background:#09090b;border-bottom:1px solid var(--line);position:relative;overflow:hidden;cursor:pointer}
-.gallery-thumb img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
-.gallery-card:hover .gallery-thumb img{transform:scale(1.04)}
+.gallery-thumb{aspect-ratio:16/10;background:#09090b;border-bottom:1px solid var(--line);position:relative;overflow:hidden;cursor:pointer;display:flex;align-items:center;justify-content:center;padding:4px}
+.gallery-thumb img{width:100%;height:100%;object-fit:contain;background:#09090b;transition:transform .4s ease}
+.gallery-card:hover .gallery-thumb img{transform:scale(1.03)}
 .gallery-overlay{position:absolute;inset:0;background:rgba(5,5,6,.6);opacity:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:var(--paper);font-size:13px;font-weight:700;transition:opacity .2s ease}
 .gallery-thumb:hover .gallery-overlay{opacity:1}
 .btn-sm{display:inline-flex;align-items:center;font-size:13px;font-weight:700;color:var(--acc);padding:4px 0}
@@ -365,6 +367,17 @@ body.lb-open{overflow:hidden}
 .test-card:hover .test-thumb-card img{transform:scale(1.04)}
 .test-card:hover .test-thumb-card .cert-overlay{opacity:1}
 .test-card .test-info{display:flex;flex-direction:column;gap:4px;margin-top:10px}
+
+.lightbox.lb-image-only .lb-caption,
+.lightbox.lb-image-only .lb-nav{display:none !important}
+.lightbox.lb-image-only .lb-dialog{max-width:min(1200px,94vw);max-height:94vh}
+.lightbox.lb-image-only .lb-stage{max-height:88vh;width:100%;display:flex;align-items:center;justify-content:center}
+.lightbox.lb-image-only .lb-stage img{max-width:min(1200px,92vw);max-height:86vh;object-fit:contain;box-shadow:0 24px 70px rgba(0,0,0,.95);background:#09090b;border:1px solid var(--line)}
+
+.btn-view-drive{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;font-size:15px;font-weight:700;text-transform:none;letter-spacing:normal;border-radius:999px;cursor:pointer;text-decoration:none}
+@keyframes drivePulse{0%,100%{transform:scale(1)}50%{transform:scale(1.15)}}
+.gdrive-icon-anim{animation:drivePulse 2.4s ease-in-out infinite;flex:none;vertical-align:middle}
+.btn-view-drive:hover .gdrive-icon-anim{animation:drivePulse .8s ease-in-out infinite}
 
 </style>
 </head>
@@ -655,54 +668,72 @@ body.lb-open{overflow:hidden}
 
 <!-- ================= PORTFOLIO GALLERY ================= -->
 <section class="sec" id="gallery">
-  <div class="gallery-header" data-block>
-    <a class="btn-drive" href="https://drive.google.com/drive/folders/1jCWqn8vjORThrPvIRkcO2VTpYz7UJMPb?usp=sharing" target="_blank" rel="noopener" title="Open Google Drive Portfolio">
-      <svg class="gdrive-icon" viewBox="0 0 24 24" width="22" height="22">
+  <div class="gallery-grid" data-block>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-4.jpg">
+        <img src="./assets/images/portfolio/portfolio-4.jpg" alt="Portfolio Project 1" loading="eager">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-5.jpg">
+        <img src="./assets/images/portfolio/portfolio-5.jpg" alt="Portfolio Project 2" loading="eager">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-6.jpg">
+        <img src="./assets/images/portfolio/portfolio-6.jpg" alt="Portfolio Project 3" loading="eager">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-12.jpg">
+        <img src="./assets/images/portfolio/portfolio-12.jpg" alt="Portfolio Project 4" loading="eager">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-13.jpg">
+        <img src="./assets/images/portfolio/portfolio-13.jpg" alt="Portfolio Project 5" loading="eager">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-11.jpg">
+        <img src="./assets/images/portfolio/portfolio-11.jpg" alt="Portfolio Project 6" loading="eager">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-1.jpg">
+        <img src="./assets/images/portfolio/portfolio-1.jpg" alt="Portfolio Project 7" loading="lazy">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-2.jpg">
+        <img src="./assets/images/portfolio/portfolio-2.jpg" alt="Portfolio Project 8" loading="lazy">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+    <article class="gallery-card card" data-block data-b="box">
+      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="projects" data-lightbox-mode="image-only" data-src="./assets/images/portfolio/portfolio-3.jpg">
+        <img src="./assets/images/portfolio/portfolio-3.jpg" alt="Portfolio Project 9" loading="lazy">
+        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>View Image</span></div>
+      </div>
+    </article>
+  </div>
+  <div class="gallery-footer" data-block style="display:flex;justify-content:center;margin-top:clamp(32px,5vh,56px)">
+    <a class="btn pri btn-view-drive" href="https://drive.google.com/drive/folders/1jCWqn8vjORThrPvIRkcO2VTpYz7UJMPb?usp=sharing" target="_blank" rel="noopener" data-b="box">
+      <svg class="gdrive-icon-anim" viewBox="0 0 24 24" width="22" height="22">
         <path fill="#4285F4" d="M8.2 2.6L1.8 13.8l4 6.8 6.4-11.2z"/>
         <path fill="#0F9D58" d="M15.8 2.6H8.2l6.4 11.2h7.6z"/>
         <path fill="#FFBB00" d="M22.2 13.8H7l-3.8 6.8h15.2z"/>
       </svg>
       <span>View All Projects</span>
-      <svg class="arrow-icon" viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:4px"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
     </a>
-  </div>
-  <div class="gallery-grid" data-block>
-    <article class="gallery-card card" data-block data-b="box">
-      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="gallery" data-src="./assets/images/portfolio/portfolio-4.jpg" data-title="Reliance Brand Campaign & Collateral" data-desc="Visual branding, campaign assets, print advertisements, and digital marketing collateral for large-scale enterprise campaigns." data-tag="Brand & Graphic Design">
-        <img src="./assets/images/portfolio/portfolio-4.jpg" alt="Reliance Brand Campaign & Collateral" loading=\"eager\">
-        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Enlarge View</span></div>
-      </div>
-    </article>
-    <article class="gallery-card card" data-block data-b="box">
-      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="gallery" data-src="./assets/images/portfolio/portfolio-5.jpg" data-title="OMI AI — Wearable AI Experience" data-desc="Interactive product concept and companion mobile interface for an AI wearable, uniting speech interaction, live memory, and ambient feedback." data-tag="Product & AI UX">
-        <img src="./assets/images/portfolio/portfolio-5.jpg" alt="OMI AI — Wearable AI Experience" loading=\"eager\">
-        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Enlarge View</span></div>
-      </div>
-    </article>
-    <article class="gallery-card card" data-block data-b="box">
-      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="gallery" data-src="./assets/images/portfolio/portfolio-6.jpg" data-title="IIT Madras Shaastra Design Suite" data-desc="Complete visual identity, posters, brochures, digital decks, and event graphics created for prestigious technical festival competitions." data-tag="Visual Identity & Creative">
-        <img src="./assets/images/portfolio/portfolio-6.jpg" alt="IIT Madras Shaastra Design Suite" loading=\"eager\">
-        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Enlarge View</span></div>
-      </div>
-    </article>
-    <article class="gallery-card card" data-block data-b="box">
-      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="gallery" data-src="./assets/images/portfolio/portfolio-12.jpg" data-title="FinEdge Digital Banking Web Application" data-desc="Modern fintech dashboard featuring intuitive financial analytics, cross-border payment flows, automated budgeting insights, and account management." data-tag="Fintech & Web UX">
-        <img src="./assets/images/portfolio/portfolio-12.jpg" alt="FinEdge Digital Banking Web Application" loading=\"eager\">
-        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Enlarge View</span></div>
-      </div>
-    </article>
-    <article class="gallery-card card" data-block data-b="box">
-      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="gallery" data-src="./assets/images/portfolio/portfolio-13.jpg" data-title="PulseFit Health & Workout Companion" data-desc="Gamified fitness tracker offering customized workout regimens, Apple Health / Google Fit sync, nutrition calculators, and community challenges." data-tag="Mobile & Fitness UX">
-        <img src="./assets/images/portfolio/portfolio-13.jpg" alt="PulseFit Health & Workout Companion" loading=\"eager\">
-        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Enlarge View</span></div>
-      </div>
-    </article>
-    <article class="gallery-card card" data-block data-b="box">
-      <div class="gallery-thumb" data-b="box" data-lightbox data-gallery="gallery" data-src="./assets/images/portfolio/portfolio-11.jpg" data-title="YouTube Tech & Design Masterclass Brand" data-desc="Motion identity packages, cinematic title reveals, and custom thumbnails created for a channel of 200,000+ subscribers and 15M+ views." data-tag="Motion & Video Identity">
-        <img src="./assets/images/portfolio/portfolio-11.jpg" alt="YouTube Tech & Design Masterclass Brand" loading=\"eager\">
-        <div class="gallery-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Enlarge View</span></div>
-      </div>
-    </article>
   </div>
 </section>
 
@@ -987,82 +1018,81 @@ body.lb-open{overflow:hidden}
   <div class="test-grid" data-block>
     
     <div class="test-card" data-block data-b="box">
-      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/LOR.png" data-title="Lakeside Shipping Leadership" data-desc="Lakeside Shipping — Michigan, USA" data-tag="Official Letter of Recommendation">
-        <img src="./assets/images/testimonial/LOR.png" alt="Lakeside Shipping Leadership" loading="lazy">
-        <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Letter</span></div>
+      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/LOR.png" data-title="Lakeside Shipping" data-desc="Michigan, USA" data-tag="Endorsement">
+        <img src="./assets/images/testimonial/LOR.png" alt="Lakeside Shipping Endorsement" loading="lazy">
+        <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Endorsement</span></div>
       </div>
       <div class="test-info">
-        <h4 class="test-name" data-b="text">Lakeside Shipping Leadership</h4>
-        <span class="test-title" data-b="text">Official Letter of Recommendation</span>
-        <span class="test-org" data-b="text">Lakeside Shipping — Michigan, USA</span>
-        <p class="test-quote" data-b="text">"Ajit demonstrated phenomenal design execution during his engagement, rapidly converting from contract to full-time due to his mastery of Figma, creative problem-solving, and reliable communication."</p>
+        <h4 class="test-name" data-b="text">Lakeside Shipping</h4>
+        <span class="test-org" data-b="text">Michigan, USA</span>
       </div>
     </div>
 
     <div class="test-card" data-block data-b="box">
-      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/EVU.jpg" data-title="EVU Executive Board" data-desc="EVU — New York, USA" data-tag="Official Letter of Recommendation">
-        <img src="./assets/images/testimonial/EVU.jpg" alt="EVU Executive Board" loading="lazy">
-        <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Certificate</span></div>
+      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/EVU.jpg" data-title="EVU" data-desc="New York, USA" data-tag="Endorsement">
+        <img src="./assets/images/testimonial/EVU.jpg" alt="EVU Endorsement" loading="lazy">
+        <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Endorsement</span></div>
       </div>
       <div class="test-info">
-        <h4 class="test-name" data-b="text">EVU Executive Board</h4>
-        <span class="test-title" data-b="text">Official Letter of Recommendation</span>
-        <span class="test-org" data-b="text">EVU — New York, USA</span>
-        <p class="test-quote" data-b="text">"Ajit produced high-fidelity interfaces, automotive EV dashboard prototypes, and marketing collateral of international caliber. His collaboration with our product managers and engineers was flawless."</p>
+        <h4 class="test-name" data-b="text">EVU</h4>
+        <span class="test-org" data-b="text">New York, USA</span>
       </div>
     </div>
 
     <div class="test-card" data-block data-b="box">
-      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/DNA.jpg" data-title="Digital Nexus AI Team" data-desc="Digital Nexus AI — New Jersey, USA" data-tag="Official Letter of Recommendation">
-        <img src="./assets/images/testimonial/DNA.jpg" alt="Digital Nexus AI Team" loading="lazy">
-        <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Certificate</span></div>
+      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/DNA.jpg" data-title="Digital Nexus AI" data-desc="New Jersey, USA" data-tag="Endorsement">
+        <img src="./assets/images/testimonial/DNA.jpg" alt="Digital Nexus AI Endorsement" loading="lazy">
+        <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Endorsement</span></div>
       </div>
       <div class="test-info">
-        <h4 class="test-name" data-b="text">Digital Nexus AI Team</h4>
-        <span class="test-title" data-b="text">Official Letter of Recommendation</span>
-        <span class="test-org" data-b="text">Digital Nexus AI — New Jersey, USA</span>
-        <p class="test-quote" data-b="text">"Ajit contributed significantly to our AI-powered LMS platform. His wireframes, interaction models, and design system components streamlined user flows and elevated our product aesthetic."</p>
+        <h4 class="test-name" data-b="text">Digital Nexus AI</h4>
+        <span class="test-org" data-b="text">New Jersey, USA</span>
       </div>
     </div>
 
     <div class="test-card" data-block data-b="box">
-      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/testimonial (1).jpg" data-title="Global Client Endorsement #1" data-desc="United States" data-tag="Verified Upwork / Freelance Review">
-        <img src="./assets/images/testimonial/testimonial (1).jpg" alt="Global Client Endorsement #1" loading="lazy">
+      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/testimonial (1).jpg" data-title="Client Endorsement" data-desc="United States" data-tag="Verified Review">
+        <img src="./assets/images/testimonial/testimonial (1).jpg" alt="Client Endorsement" loading="lazy">
         <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Review</span></div>
       </div>
       <div class="test-info">
-        <h4 class="test-name" data-b="text">Global Client Endorsement #1</h4>
-        <span class="test-title" data-b="text">Verified Upwork / Freelance Review</span>
+        <h4 class="test-name" data-b="text">Client Endorsement</h4>
         <span class="test-org" data-b="text">United States</span>
-        <p class="test-quote" data-b="text">"Exceptional designer! Delivered a complete UI/UX overhaul for our platform ahead of schedule with extraordinary attention to detail. Will definitely hire again."</p>
       </div>
     </div>
 
     <div class="test-card" data-block data-b="box">
-      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/testimonial (2).jpg" data-title="Global Client Endorsement #2" data-desc="United Kingdom" data-tag="Verified Client Review">
-        <img src="./assets/images/testimonial/testimonial (2).jpg" alt="Global Client Endorsement #2" loading="lazy">
+      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/testimonial (2).jpg" data-title="Client Endorsement" data-desc="United Kingdom" data-tag="Verified Review">
+        <img src="./assets/images/testimonial/testimonial (2).jpg" alt="Client Endorsement" loading="lazy">
         <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Review</span></div>
       </div>
       <div class="test-info">
-        <h4 class="test-name" data-b="text">Global Client Endorsement #2</h4>
-        <span class="test-title" data-b="text">Verified Client Review</span>
+        <h4 class="test-name" data-b="text">Client Endorsement</h4>
         <span class="test-org" data-b="text">United Kingdom</span>
-        <p class="test-quote" data-b="text">"Ajit transformed our vision into an intuitive, pixel-perfect reality. His motion design and video editing skills gave our campaign a massive engagement boost."</p>
       </div>
     </div>
 
     <div class="test-card" data-block data-b="box">
-      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/testimonial (3).jpg" data-title="Global Client Endorsement #3" data-desc="Canada" data-tag="Verified Client Review">
-        <img src="./assets/images/testimonial/testimonial (3).jpg" alt="Global Client Endorsement #3" loading="lazy">
+      <div class="test-thumb-card" data-lightbox data-gallery="testimonials" data-src="./assets/images/testimonial/testimonial (3).jpg" data-title="Client Endorsement" data-desc="Canada" data-tag="Verified Review">
+        <img src="./assets/images/testimonial/testimonial (3).jpg" alt="Client Endorsement" loading="lazy">
         <div class="cert-overlay"><svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg><span>Inspect Review</span></div>
       </div>
       <div class="test-info">
-        <h4 class="test-name" data-b="text">Global Client Endorsement #3</h4>
-        <span class="test-title" data-b="text">Verified Client Review</span>
+        <h4 class="test-name" data-b="text">Client Endorsement</h4>
         <span class="test-org" data-b="text">Canada</span>
-        <p class="test-quote" data-b="text">"One of the most talented designers I have collaborated with. Fast, communicative, and exceptionally proficient across both Figma and Adobe Creative Suite."</p>
       </div>
     </div>
+  </div>
+  <div class="test-footer" data-block style="display:flex;justify-content:center;margin-top:clamp(32px,5vh,56px)">
+    <a class="btn pri btn-view-drive" href="https://drive.google.com/drive/folders/1jCWqn8vjORThrPvIRkcO2VTpYz7UJMPb?usp=sharing" target="_blank" rel="noopener" data-b="box">
+      <svg class="gdrive-icon-anim" viewBox="0 0 24 24" width="22" height="22">
+        <path fill="#4285F4" d="M8.2 2.6L1.8 13.8l4 6.8 6.4-11.2z"/>
+        <path fill="#0F9D58" d="M15.8 2.6H8.2l6.4 11.2h7.6z"/>
+        <path fill="#FFBB00" d="M22.2 13.8H7l-3.8 6.8h15.2z"/>
+      </svg>
+      <span>View All Endorsements</span>
+      <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" style="margin-left:4px"><path d="M3 8h10M9 4l4 4-4 4"/></svg>
+    </a>
   </div>
 </section>
 
@@ -1073,12 +1103,65 @@ body.lb-open{overflow:hidden}
     <h2 class="h" data-b="text">What I build with</h2>
   </div>
   <div class="stack" data-block>
-    <div class="row" data-b="box"><h3 data-b="text">Design & UX</h3><div class="chips">
-      <span class="hot" data-b="box">Figma</span><span data-b="box">Framer</span><span data-b="box">Adobe XD</span><span data-b="box">Sketch</span><span data-b="box">User Research</span><span data-b="box">Prototyping</span><span data-b="box">Design Systems</span><span data-b="box">Uizard</span></div></div>
-    <div class="row" data-b="box"><h3 data-b="text">Motion & Media</h3><div class="chips">
-      <span class="hot" data-b="box">After Effects</span><span data-b="box">Premiere Pro</span><span data-b="box">DaVinci Resolve</span><span data-b="box">Apple Motion</span><span data-b="box">Final Cut Pro</span><span data-b="box">ElevenLabs</span></div></div>
-    <div class="row" data-b="box"><h3 data-b="text">Creative & Code</h3><div class="chips">
-      <span class="hot" data-b="box">Photoshop</span><span data-b="box">Illustrator</span><span data-b="box">InDesign</span><span data-b="box">HTML5 & CSS3</span><span data-b="box">JavaScript</span><span data-b="box">Tailwind CSS</span><span data-b="box">React</span><span data-b="box">Adobe Firefly</span></div></div>
+    <div class="row" data-b="box">
+      <h3 data-b="text">UX Design Tools</h3>
+      <div class="chips">
+        <span class="highlighted" data-b="box">Figma</span>
+        <span class="highlighted" data-b="box">Apple Creator Studio</span>
+        <span data-b="box">Uizard</span>
+        <span data-b="box">Google Stitch</span>
+      </div>
+    </div>
+    <div class="row" data-b="box">
+      <h3 data-b="text">Design & AI Tools</h3>
+      <div class="chips">
+        <span class="highlighted" data-b="box">Adobe Creative Cloud</span>
+        <span data-b="box">Adobe Creative Cloud Pro</span>
+        <span data-b="box">Photoshop</span>
+        <span data-b="box">Illustrator</span>
+        <span data-b="box">InDesign</span>
+        <span data-b="box">Canva</span>
+        <span data-b="box">Affinity</span>
+        <span data-b="box">Adobe XD</span>
+        <span data-b="box">Sketch</span>
+        <span data-b="box">Framer</span>
+        <span data-b="box">Adobe Firefly</span>
+        <span data-b="box">Higgsfield</span>
+        <span data-b="box">ElevenLabs</span>
+      </div>
+    </div>
+    <div class="row" data-b="box">
+      <h3 data-b="text">Motion & Video</h3>
+      <div class="chips">
+        <span data-b="box">Premiere Pro</span>
+        <span data-b="box">After Effects</span>
+        <span data-b="box">DaVinci Resolve Studio</span>
+        <span data-b="box">Final Cut Pro</span>
+        <span data-b="box">Apple Motion</span>
+      </div>
+    </div>
+    <div class="row" data-b="box">
+      <h3 data-b="text">Core Design Skills</h3>
+      <div class="chips">
+        <span data-b="box">User Research</span>
+        <span data-b="box">Prototyping</span>
+        <span data-b="box">Interaction Design</span>
+        <span data-b="box">Usability Testing</span>
+        <span data-b="box">UI Development</span>
+        <span data-b="box">Design Thinking</span>
+        <span data-b="box">Critical Thinking</span>
+        <span data-b="box">Visual Storytelling</span>
+        <span data-b="box">Solution-oriented Design</span>
+        <span data-b="box">User Experience Design</span>
+        <span data-b="box">Visual Design</span>
+        <span data-b="box">Brand Identity Design</span>
+        <span data-b="box">Print Design</span>
+        <span data-b="box">Social Media Design</span>
+        <span data-b="box">Marketing Collateral</span>
+        <span data-b="box">Packaging Design</span>
+        <span data-b="box">User-Centered Design</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1599,6 +1682,7 @@ const Lightbox = {
   counter: null,
   items: [],
   currentIndex: 0,
+  isImageOnly: false,
   init() {
     this.el = document.getElementById('lightbox');
     if (!this.el) return;
@@ -1613,15 +1697,17 @@ const Lightbox = {
       if (!trigger) return;
       e.preventDefault();
       const group = trigger.dataset.gallery || 'default';
+      const imageOnly = trigger.dataset.lightboxMode === 'image-only' || group === 'projects';
       const allInGroup = Array.from(document.querySelectorAll(`[data-lightbox][data-gallery="${group}"]`));
       this.items = (allInGroup.length ? allInGroup : [trigger]).map(el => ({
         src: el.dataset.src || el.getAttribute('href') || el.src || '',
         title: el.dataset.title || el.getAttribute('alt') || '',
         desc: el.dataset.desc || '',
-        tag: el.dataset.tag || ''
+        tag: el.dataset.tag || '',
+        imageOnly: imageOnly
       }));
       const idx = allInGroup.indexOf(trigger);
-      this.open(idx >= 0 ? idx : 0);
+      this.open(idx >= 0 ? idx : 0, imageOnly);
     });
 
     this.el.querySelector('.lb-close')?.addEventListener('click', () => this.close());
@@ -1632,12 +1718,18 @@ const Lightbox = {
     document.addEventListener('keydown', e => {
       if (!this.el.classList.contains('active')) return;
       if (e.key === 'Escape') this.close();
-      else if (e.key === 'ArrowLeft') this.prev();
-      else if (e.key === 'ArrowRight') this.next();
+      else if (!this.isImageOnly && e.key === 'ArrowLeft') this.prev();
+      else if (!this.isImageOnly && e.key === 'ArrowRight') this.next();
     });
   },
-  open(index) {
+  open(index, imageOnly = false) {
     this.currentIndex = index;
+    this.isImageOnly = imageOnly;
+    if (imageOnly) {
+      this.el.classList.add('lb-image-only');
+    } else {
+      this.el.classList.remove('lb-image-only');
+    }
     this.render();
     this.el.classList.add('active');
     this.el.setAttribute('aria-hidden', 'false');
@@ -1645,6 +1737,7 @@ const Lightbox = {
   },
   close() {
     this.el.classList.remove('active');
+    this.el.classList.remove('lb-image-only');
     this.el.setAttribute('aria-hidden', 'true');
     document.body.classList.remove('lb-open');
   },
@@ -1662,7 +1755,14 @@ const Lightbox = {
     const item = this.items[this.currentIndex];
     if (!item) return;
     this.img.src = item.src;
-    this.img.alt = item.title || 'Portfolio item';
+    this.img.alt = item.title || 'Enlarged view';
+    if (this.isImageOnly) {
+      if (this.title) this.title.textContent = '';
+      if (this.desc) this.desc.textContent = '';
+      if (this.tag) this.tag.style.display = 'none';
+      if (this.counter) this.counter.textContent = '';
+      return;
+    }
     this.title.textContent = item.title || '';
     this.desc.textContent = item.desc || '';
     if (this.tag) {
