@@ -1780,10 +1780,24 @@ Lightbox.init();
 function skipAnimation() {
   started = finished = true;
   paused = false;
+  touring = false;
+  tourGen++;
   blocks.forEach(b => {
     b.promise = Promise.resolve();
     b.fin = true;
   });
+  for (const tw of [...tweens]) {
+    tweens.delete(tw);
+    try { tw.fn(1); } catch (e) {}
+    tw.res();
+  }
+  for (const tm of [...timers]) {
+    timers.delete(tm);
+    tm.res();
+  }
+  queue.length = 0;
+  $$('.wire, .picker', stage).forEach(w => w.remove());
+
   root.classList.remove('locked');
   root.classList.remove('nocursor');
   $('#boot')?.classList.add('off');
@@ -1798,8 +1812,27 @@ function skipAnimation() {
   done = total;
   hudCount();
   status('Built');
-  idleMode = 'wander';
   setPlayIcon();
+
+  swarm.on = false;
+  finaleRan = true;
+  idleMode = 'ring';
+  stage.classList.add('ring');
+
+  const b = $('.contact .btn.pri') || $('.contact h2');
+  if (b && agents && agents.length) {
+    const r = rectOf(b);
+    const now = performance.now();
+    agents.forEach(a => {
+      a.idle = true;
+      a.mode('arrow');
+      a.vx = a.vy = 0;
+      const angle = (a.i / a.n) * Math.PI * 2 + now * .00035;
+      a.x = r.x + r.w / 2 + Math.cos(angle) * (r.w / 2 + 52) - 4;
+      a.y = r.y + r.h / 2 + Math.sin(angle) * (r.h / 2 + 30) - 7;
+      a.render();
+    });
+  }
 }
 
 $('#bSkip')?.addEventListener('click', e => {
